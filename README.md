@@ -1,69 +1,92 @@
-# CodeIgniter 4 Application Starter
+# Perpustakaan Buku Digital (Pustaka Digital)
 
-## What is CodeIgniter?
+Aplikasi web Perpustakaan Buku Digital berbasis **CodeIgniter 4** dan **MySQL**, yang dirancang dengan antarmuka modern bertema **Eid Adha** menggunakan **Tailwind CSS**. Aplikasi ini dibangun untuk memenuhi kriteria UAS Pemrograman Web 2.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Fitur Utama
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+1. **Autentikasi & Manajemen Sesi (Session Handling)**:
+   - Pembatasan rute akses menggunakan middleware filter (`AuthFilter`).
+   - Pembagian peran pengguna (Role-based access):
+     - **Admin**: Memiliki akses penuh untuk melihat, menambah, mengubah, dan menghapus buku (CRUD).
+     - **Member**: Memiliki akses baca-saja (read-only) untuk melihat katalog dan detail buku.
+2. **Book CRUD (Create, Read, Update, Delete)**:
+   - Fitur pengelolaan buku lengkap oleh Admin.
+   - Mendukung pengunggahan cover buku (*image file upload*).
+3. **AJAX Live Search & AJAX Pagination (Single Page Experience)**:
+   - Pencarian buku secara real-time langsung saat pengguna mengetik (dengan *debounce* 300ms untuk optimasi server).
+   - Perpindahan halaman katalog secara dinamis tanpa melakukan reload seluruh halaman web (AJAX).
+   - Sinkronisasi URL otomatis menggunakan HTML5 History API agar pencarian tetap presisi saat halaman di-refresh.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Teknologi yang Digunakan
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- **Backend**: PHP 8.1+ / CodeIgniter 4.7.4
+- **Database**: MySQL / MariaDB
+- **Frontend**: Vanilla CSS & Tailwind CSS (via CDN)
+- **Interaksi Klien**: Vanilla JavaScript (Fetch API & DOMParser)
 
-## Installation & updates
+---
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## Cara Instalasi
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### 1. Persiapan Berkas
+Ekstrak atau letakkan berkas proyek ini di dalam direktori server lokal Anda, misalnya pada WampServer:
+`C:\wamp64\www\kuliah\uas-pw2`
 
-## Setup
+### 2. Konfigurasi Database
+1. Buka database manager lokal Anda (phpMyAdmin, Adminer, dll).
+2. Buat database baru bernama `perpustakaan_digital`.
+3. Impor berkas **`database.sql`** yang disertakan di root direktori proyek ini ke dalam database baru tersebut.
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+*Alternatif (jika ingin menginisialisasi ulang database kosong melalui Spark CLI):*
+```bash
+php spark db:create perpustakaan_digital
+php spark migrate
+php spark db:seed UserSeeder
+php spark db:seed BookSeeder
+```
 
-## Important Change with index.php
+### 3. Konfigurasi Environment (`.env`)
+Salin berkas `env` di root direktori proyek menjadi `.env` lalu sesuaikan dengan konfigurasi MySQL server Anda:
+```env
+CI_ENVIRONMENT = development
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+app.baseURL = 'http://localhost/kuliah/uas-pw2/public/'
+app.indexPage = ''
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+database.default.hostname = localhost
+database.default.database = perpustakaan_digital
+database.default.username = root
+database.default.password = ""
+database.default.DBDriver = MySQLi
+database.default.port = 3306
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+---
 
-## Repository Management
+## Cara Menjalankan Aplikasi
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Ada dua cara untuk menjalankan aplikasi ini:
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### Opsi A: Menggunakan Spark Server (Sangat Direkomendasikan)
+1. Buka terminal (CMD / PowerShell / Git Bash) di root direktori proyek (`uas-pw2`).
+2. Jalankan perintah server pengembangan:
+   ```bash
+   php spark serve
+   ```
+3. Akses aplikasi melalui browser pada alamat:
+   `http://localhost:8080`
 
-## Server Requirements
+### Opsi B: Akses Langsung via WampServer Localhost
+Pastikan layanan Apache dan MySQL pada WampServer aktif, lalu akses rute publik web di browser Anda pada alamat:
+`http://localhost/kuliah/uas-pw2/public/`
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+---
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## Kredensial Akun Default
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+Gunakan akun di bawah ini untuk menguji hak akses (role) masing-masing user:
 
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+| Role | Username | Password | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin` | `admin123` | Akses penuh (Katalog, Detail, Tambah, Edit, Hapus) |
+| **Member** | `member` | `member123` | Akses terbatas (Hatalog, Detail, Live Search) |

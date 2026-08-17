@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
             [
                 'username'   => 'admin',
                 'password'   => password_hash('admin123', PASSWORD_DEFAULT),
-                'name'       => 'Library Administrator',
+                'name'       => 'Iktiar Saputra',
                 'role'       => 'admin',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             [
                 'username'   => 'member',
                 'password'   => password_hash('member123', PASSWORD_DEFAULT),
-                'name'       => 'Active Library Member',
+                'name'       => 'Budi',
                 'role'       => 'member',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),

@@ -12,7 +12,7 @@
         }
     </style>
 </head>
-<body class="bg-teal-50 text-slate-800 min-h-screen flex flex-col md:flex-row overflow-hidden">
+<body class="bg-teal-50 text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
     <aside class="w-full md:w-64 bg-gradient-to-b from-teal-800 to-teal-950 text-white flex flex-col justify-between shrink-0 shadow-xl border-r border-teal-900 z-10">
         <div>
             <div class="p-6 border-b border-teal-900/60 flex items-center justify-between">
@@ -43,12 +43,6 @@
                         <span>Tambah Buku</span>
                     </a>
                 <?php endif; ?>
-                <a href="<?= base_url('logout') ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition text-teal-100 hover:bg-teal-700/40 hover:text-white">
-                    <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                    </svg>
-                    <span>Keluar</span>
-                </a>
             </nav>
         </div>
         <div class="p-4 border-t border-teal-900/60 bg-teal-950/40">
